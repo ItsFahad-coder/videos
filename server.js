@@ -67,6 +67,14 @@ app.get("/gallery", (req, res) => {
   `);
 });
 
+app.delete("/delete/:filename", (req, res) => {
+  const filePath = path.join(uploadsDir, req.params.filename);
+  fs.unlink(filePath, (err) => {
+    if (err) return res.status(500).json({ success: false });
+    res.json({ success: true });
+  });
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
