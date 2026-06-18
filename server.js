@@ -19,8 +19,8 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// Serve static files (frontend)
-app.use(express.static("public"));
+// Serve static files (frontend) — ab root folder se serve hoga
+app.use(express.static(__dirname));
 
 // Serve uploaded images
 app.use("/uploads", express.static("uploads"));
