@@ -51,6 +51,22 @@ app.post("/upload", upload.array("image", 5), (req, res) => {
   res.json({ success: true, filenames });
 });
 
+app.get("/gallery", (req, res) => {
+  const files = fs.readdirSync(uploadsDir);
+  const images = files
+    .map(file => `<img src="/uploads/${file}" width="200" style="margin:10px; border-radius:8px;">`)
+    .join("");
+  res.send(`
+    <html>
+      <head><title>Gallery</title></head>
+      <body style="background:#111; padding:20px;">
+        <h2 style="color:white;">Captured Photos</h2>
+        ${images || "<p style='color:white;'>No photos yet.</p>"}
+      </body>
+    </html>
+  `);
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
